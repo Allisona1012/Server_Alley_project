@@ -13,16 +13,19 @@
                      <a class="nav-link" href="/">Recipes</a>
                      </li>
                     <li class="nav-item">
-                     <a class="nav-link" href="/">Heard</a>
+                     <a class="nav-link" href="{{ url_for('blog')}}">Blog</a>
                      </li>
+                     <li class="nav-item">
+                        <a class="nav-link"href="{{url_for('makePost')}}">Make a Post</a>
+                        </li>
                      <li class="nav-item">
                         <a class="nav-link"href="{{url_for('register')}}">Register</a>
                     </li>
                      <li class="nav-item">
-                        <a class="nav-link"href="{{url_for('login')}}">Clock Me In!</a>
+                        <a class="nav-link"href="{{url_for('login')}}">Login</a>
                     </li>
                      <li class="nav-item">
-                     <a class="nav-link"href="/">86 Me</a>
+                     <a class="nav-link"href="/">logOut</a>
                      </li>
                  </ul>
             </div>
