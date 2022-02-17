@@ -52,5 +52,9 @@ class Post( db.Model):
      def get_user(self):
          return User.query.filter_by(id=self.user_id).first().username
 
+
+
+
+
      
    

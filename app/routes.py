@@ -1,6 +1,6 @@
 from app import app 
 from flask import render_template,url_for,flash, redirect
-from flask_login import current_user, login_required, login_user, logout_user 
+from flask_login import  login_required, login_user, logout_user, current_user
 from app.forms import LoginForm, PostForm, RegistrationForm
 from app.models import User, Post
 
@@ -71,11 +71,11 @@ def blog():
 #to be able to make a post someone has to be logged in
 @login_required
 def makePost():
-    form = PostForm
+    form = PostForm()
 
     if form.validate_on_submit():
-        title= title.form.data
-        body = body.form.data
+        title= form.title.data
+        body = form.body.data
         user_id= current_user.id
 
         Post(title=title, body=body, user_id = user_id)
