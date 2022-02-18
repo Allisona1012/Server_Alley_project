@@ -1,0 +1,1 @@
+const responseAPI = async(strDrink)

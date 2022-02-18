@@ -1,13 +1,17 @@
 from app import app 
 from flask import render_template,url_for,flash, redirect
 from flask_login import  login_required, login_user, logout_user, current_user
-from app.forms import LoginForm, PostForm, RegistrationForm
+from app.forms import LoginForm, PostForm, RegistrationForm, DrinkSearchForm
 from app.models import User, Post
+import requests
+import json
 
 
 
 @app.route('/')
 def index():
+
+   
     return render_template('index.html')
 
 
@@ -121,19 +125,27 @@ def about_post(post_id):
 @app.route('/posts/<int:post_id>/edit', methods=["GET","POST"])
 @login_required
 def editPost(post_id):
+
+    if not current_user:
+        flash("Sorry! You cannot edit this one!", "danger")
+        return redirect(url_for ('blog.html'))
+
     post = Post.query.get_or_404(post_id)
     form = PostForm()
-
-    if current_user.id != post.user_id:
-        flash("Sorry! You cannot edit this one!", "danger")
-        return redirect(url_for ('blog.html', post_id =post.id))
-
     if form.validate_on_submit():
         post.title = form.title.data
         post.body= form.body.data
 
         post.save()
         flash('Your Post Has Been Updated!','primary')
-        return redirect(url_for('blog.html', post_id = post.id))
+        return redirect(url_for('blog'))
     return render_template('editPost.html',post=post,form=form)
+
+@app.route('/recipes')
+def recipes():
+    form = DrinkSearchForm
+    req= requests.get('http://www.thecocktaildb.com/api/json/v1/1/random.php')
+    data = json.loads(req.content)
+
+    return render_template('recipes.html', data=data['drinks'], form=form)
    

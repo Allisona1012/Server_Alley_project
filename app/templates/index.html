@@ -2,7 +2,17 @@
 
 {% block content %}
 <div class="container">
-    <h1> Welcome to the server alley!</h1>
+    {% if current_user.is_authenticated %}
+    <h1>Welcome back, {{ current_user.username }}</h1>
+    
+{% else %}
+<br>
+    <h1>Welcome to The Server Alley. Please register for all the fun!!</h1>
+    <br>
+    <hr>
+    <h2> Please excuse our mess! We are under construction! </h2>
+    
+{% endif %}
 
 </div>
 {% endblock %}

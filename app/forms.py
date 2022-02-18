@@ -23,3 +23,7 @@ class PostForm(FlaskForm):
 class CommentForm(FlaskForm):
     text = StringField('Comment', validators=[DataRequired()])
     submit= SubmitField('Post')
+
+class DrinkSearchForm(FlaskForm):
+    drink= StringField('Drink', validators=[DataRequired()])
+    submit=SubmitField('Seach')
