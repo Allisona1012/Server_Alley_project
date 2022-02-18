@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1 class='text-center'> Edit Your Post</h1>
+    <form method="POST">
+        {{ form.csrf_token }}
+        <div class="form-group">
+            <fieldset>
+                {{ form.title.label }}
+                {{ form.title(class='form-control', value=post.title) }}
+            </fieldset>
+            <fieldset>
+                {{ form.body.label }}
+                {{ form.body(class='form-control', value=post.body) }}
+            </fieldset>
+            {{ form.submit(value='Save') }}
+        </div>
+    </form>
+
+    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deletePostModal">
+        Delete Post
+    </button>
+  
+    <!-- Modal -->
+    <div class="modal fade" id="deletePostModal" tabindex="-1" aria-labelledby="deletePostModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="deletePostModalLabel">Delete {{ post.title }}?</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+            You are about to 86 {{ post.title }}. Are you sure?
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No... I'll keep it </button>
+            <a href="{{ url_for('delete_post', post_id=post.id) }}" class="btn btn-danger">Yes, 86 it!</a>
+            </div>
+        </div>
+        </div>
+    </div>
+
+{% endblock %}

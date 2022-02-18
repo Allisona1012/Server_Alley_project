@@ -19,6 +19,7 @@ class User(db.Model, UserMixin):
     #this references all the posts the user has created
     #the backref is what allows us to get the info from the post to link to the user
     posts=db.relationship('Post', backref='user')
+    # comments=db.relationship("Comment",backref='user')
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -40,6 +41,7 @@ class Post( db.Model):
      # need an author to assign to the post. Foriegn key??
      #ondelete will get rid of all posts that the user has created
      user_id= db.Column (db.Integer,db.ForeignKey('user.id'), nullable=False)
+    #  comments=db.relationship("Comment",backref='post')
 
      def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -51,7 +53,38 @@ class Post( db.Model):
 
      def get_user(self):
          return User.query.filter_by(id=self.user_id).first().username
+    
+     def delete_post(self):
+        db.session.delete(self)
+        db.session.commit()
+     
+     def save(self):
+         db.session.commit()
 
+     
+# class Comment(db.Model):
+#     id = db.Column(db.Integer, primary_key=True)
+#     text = db.Column(db.String(200), nullable=False)
+#     date_created= db.Column(db.DateTime, nullable= False, default=datetime.utcnow)
+#     author = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+#     post_id = db.Column(db.Integer, db.ForeignKey('post.id'), nullable=False)
+#     def __init__(self, **kwargs):
+#         super().__init__(**kwargs)
+#         db.session.add(self)
+#         db.session.commit()
+
+#     def __repr__(self):
+#         return f"<Comment|{self.comment_section}>"
+
+#     def get_user(self):
+#         return User.query.filter_by(id=self.user_id).first().username
+        
+#     def save_comment(self):
+#         db.session.commit()
+
+#     def delete_comment(self):
+#         db.session.delete(self)
+#         db.session.commit()
 
 
 
